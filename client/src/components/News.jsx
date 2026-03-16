@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import EverythingCard from './Card';
 import Loader from './Loader';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 function News() {
   const [data, setData] = useState([]);
@@ -22,7 +25,7 @@ function News() {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    fetch(`/news?page=${page}&pageSize=${pageSize}`)
+    fetch(`${API_BASE_URL}/news?page=${page}&pageSize=${pageSize}`)
       .then(response => {
         if (response.ok) return response.json();
         throw new Error('Network response was not ok');

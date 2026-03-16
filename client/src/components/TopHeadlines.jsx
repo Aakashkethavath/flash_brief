@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import EverythingCard from './Card';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Loader from "./Loader";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 function TopHeadlines() {
   const params = useParams();
@@ -16,7 +19,7 @@ function TopHeadlines() {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    fetch(`/top-headlines?language=en&pageSize=${pageSize}&page=${page}`)
+    fetch(`${API_BASE_URL}/top-headlines?language=en&pageSize=${pageSize}&page=${page}`)
       .then((response) => response.ok ? response.json() : Promise.reject('Fetch error'))
       .then((json) => {
         if (json.success) {

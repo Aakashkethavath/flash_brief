@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: info-burst-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        sync: false # Set to your Vercel URL in Dashboard
+      - key: API_KEY
+        sync: false # Set this in Render Dashboard

@@ -12,7 +12,24 @@ app.use(helmet({
     contentSecurityPolicy: false,
     crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
-app.use(cors());
+
+const allowedOrigins = [
+    'http://localhost:5173', // Local Vite dev server
+    'http://localhost:3000', // Local backup
+    process.env.FRONTEND_URL // Vercel production URL (can be comma separated or single)
+].filter(Boolean);
+
+app.use(cors({
+    origin: function(origin, callback){
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}));
+
 app.use(express.urlencoded({ extended: true }));
 
 const rateLimitStore = new Map();
@@ -117,12 +134,6 @@ app.get("/top-headlines", apiLimiter, (req, res) => {
     let page = parseInt(req.query.page) || 1;
     let url = `https://newsapi.org/v2/top-headlines?category=${category}&language=en&pageSize=${pageSize}&page=${page}&apiKey=${API_KEY}`;
     fetchNews(url, res);
-});
-
-// serve static files and handle client routing
-app.use(express.static(path.join(__dirname, "../client/dist")));
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
 // global error handler

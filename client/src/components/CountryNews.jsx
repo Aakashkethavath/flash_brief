@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import EverythingCard from './Card';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Loader from './Loader';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 function CountryNews() {
   const params = useParams();
@@ -24,7 +27,7 @@ function CountryNews() {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    fetch(`/country/${params.iso}?page=${page}&pageSize=${pageSize}`)
+    fetch(`${API_BASE_URL}/country/${params.iso}?page=${page}&pageSize=${pageSize}`)
       .then((response) => {
         if (response.ok) return response.json();
         throw new Error('Network response was not ok');
