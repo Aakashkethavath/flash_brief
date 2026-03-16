@@ -4,7 +4,7 @@ import EverythingCard from './Card';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Loader from "./Loader";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://flash-brief.onrender.com';
 
 function TopHeadlines() {
   const params = useParams();
