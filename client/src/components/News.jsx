@@ -3,7 +3,7 @@ import EverythingCard from './Card';
 import Loader from './Loader';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://flash-brief.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 function News() {
   const [data, setData] = useState([]);
